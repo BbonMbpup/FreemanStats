@@ -41,7 +41,7 @@ class ClanWarRepository(private val api: ClashOfClansApi, context: Context) {
             War State: ${clanWar.state}
             Clan: ${clanWar.clan.name} (${clanWar.clan.tag})
             Opponent: ${clanWar.opponent.name}
-            Members: ${clanWar.clan.members?.size ?: 0} vs ${clanWar.opponent.members?.size ?: 0}
+            Members: ${clanWar.clan.members.size ?: 0} vs ${clanWar.opponent.members.size ?: 0}
         """.trimIndent())
     }
 
