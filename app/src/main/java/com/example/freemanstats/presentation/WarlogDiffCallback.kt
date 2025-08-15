@@ -1,7 +1,7 @@
 package com.example.freemanstats.presentation
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.freemanstats.model.WarLogItem
+import com.example.freemanstats.domain.model.WarLogItem
 
 class WarLogDiffCallback : DiffUtil.ItemCallback<WarLogItem>() {
     override fun areItemsTheSame(oldItem: WarLogItem, newItem: WarLogItem): Boolean {

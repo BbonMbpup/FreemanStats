@@ -3,6 +3,9 @@ package com.example.freemanstats.presentation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.freemanstats.presentation.tableview.StatsFragment
+import com.example.freemanstats.presentation.currentwarpage.CurrentWarFragment
+import com.example.freemanstats.presentation.historypage.HistoryFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity) {
 

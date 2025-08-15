@@ -1,9 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.FreemanStats" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.FreemanStats.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Тёмная тема всегда -->
     </style>
 
-    <style name="Theme.FreemanStats" parent="Base.Theme.FreemanStats" />
 </resources>
