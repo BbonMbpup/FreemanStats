@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -54,6 +55,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
     // AndroidX Core
     implementation("androidx.core:core-ktx:1.15.0")
@@ -72,6 +74,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.androidx.swiperefreshlayout)
     kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     // Networking
@@ -93,6 +96,17 @@ dependencies {
 
     //TableView
     implementation ("com.github.evrencoskun:TableView:v0.8.9.4")
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-android-compiler:2.51")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+
+    // Для AndroidX Notifications
+    implementation ("androidx.core:core-ktx:1.13.1")
+    implementation ("androidx.core:core:1.13.1")
 
     // Тестирование
     testImplementation("junit:junit:4.13.2")

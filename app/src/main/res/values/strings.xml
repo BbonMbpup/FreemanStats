@@ -2,4 +2,10 @@
     <string name="app_name">FreemanStats</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sort_icon_desc">Sort</string>
+    <string name="no_data_available">Нет данных для отображения</string>
+    <string name="sort_ascending">Сортировать ↑</string>
+    <string name="sort_descending">Сортировать ↓</string>
+    <string name="row_hide">Скрыть строку</string>
+    <string name="row_show">Показать строку</string>
 </resources>

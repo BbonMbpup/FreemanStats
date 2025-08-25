@@ -4,163 +4,178 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.CurrentWarFragment">
+    tools:context=".presentation.currentwarpage.CurrentWarFragment">
 
-    <!-- AppBarLayout для шторки -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:visibility="gone"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-        <!-- CollapsingToolbarLayout для анимации -->
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbarLayout"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <!-- AppBarLayout для шторки -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            app:collapsedTitleGravity="center"
-            app:contentScrim="@android:color/transparent"
-            app:expandedTitleGravity="bottom"
-            app:expandedTitleMarginBottom="16dp"
-            app:expandedTitleMarginStart="16dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
+            android:fitsSystemWindows="true">
 
-            <!-- Контент шторки -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- CollapsingToolbarLayout для анимации -->
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                app:layout_collapseMode="parallax">
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                app:collapsedTitleGravity="center"
+                app:contentScrim="@android:color/transparent"
+                app:expandedTitleGravity="bottom"
+                app:expandedTitleMarginBottom="16dp"
+                app:expandedTitleMarginStart="16dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
-                <!-- Герб первого клана -->
-                <ImageView
-                    android:id="@+id/clanBadgeImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toStartOf="@+id/totalStarsScoreTextView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/shield" />
+                <!-- Контент шторки -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    app:layout_collapseMode="parallax">
 
-                <!-- Герб второго клана -->
-                <ImageView
-                    android:id="@+id/opponentBadgeImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/shield"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/totalStarsScoreTextView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <!-- Герб первого клана -->
+                    <ImageView
+                        android:id="@+id/clanBadgeImageView"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/totalStarsScoreTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/shield" />
 
-                <!-- Название первого клана -->
-                <TextView
-                    android:id="@+id/clanNameTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="Название клана"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@id/opponentNameTextView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/destructionPercentageTextView" />
+                    <!-- Герб второго клана -->
+                    <ImageView
+                        android:id="@+id/opponentBadgeImageView"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/shield"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/totalStarsScoreTextView"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Название второго клана -->
-                <TextView
-                    android:id="@+id/opponentNameTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="Название оппонента"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/clanNameTextView"
-                    app:layout_constraintTop_toBottomOf="@id/destructionPercentageTextView" />
+                    <!-- Название первого клана -->
+                    <TextView
+                        android:id="@+id/clanNameTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="Название клана"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/opponentNameTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/destructionPercentageTextView" />
 
-                <!-- Общее количество звезд -->
-                <TextView
-                    android:id="@+id/totalStarsScoreTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="100 - 99"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toStartOf="@+id/opponentBadgeImageView"
-                    app:layout_constraintStart_toEndOf="@+id/clanBadgeImageView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <!-- Название второго клана -->
+                    <TextView
+                        android:id="@+id/opponentNameTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="Название оппонента"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/clanNameTextView"
+                        app:layout_constraintTop_toBottomOf="@id/destructionPercentageTextView" />
 
-                <!-- Процент разрушения -->
-                <TextView
-                    android:id="@+id/destructionPercentageTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="💥 95%"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/totalStarsScoreTextView" />
+                    <!-- Общее количество звезд -->
+                    <TextView
+                        android:id="@+id/totalStarsScoreTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="100 - 99"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/opponentBadgeImageView"
+                        app:layout_constraintStart_toEndOf="@+id/clanBadgeImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Использованные атаки / Общее количество атак -->
-                <TextView
-                    android:id="@+id/attacksUsedTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="⚔️ 45/50"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clanNameTextView" />
+                    <!-- Процент разрушения -->
+                    <TextView
+                        android:id="@+id/destructionPercentageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="💥 95%"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/totalStarsScoreTextView" />
 
-                <TextView
-                    android:id="@+id/averageTownHallTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="AvgTH: 10"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/opponentNameTextView" />
+                    <!-- Использованные атаки / Общее количество атак -->
+                    <TextView
+                        android:id="@+id/attacksUsedTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="⚔️ 45/50"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/clanNameTextView" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+                    <TextView
+                        android:id="@+id/averageTownHallTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="AvgTH: 10"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/opponentNameTextView" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/errorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Ощибка"
-        android:textColor="@color/red"
-        android:layout_gravity="start"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPlayers"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_player" />
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Ошибка"
+            android:textColor="@color/red"
+            android:layout_gravity="start"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_player" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
