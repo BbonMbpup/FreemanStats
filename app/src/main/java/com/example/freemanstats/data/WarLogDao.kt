@@ -13,9 +13,7 @@ import com.example.freemanstats.domain.model.WarLogEntity
 interface WarLogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWarLog(log: WarLogEntity) {
-        Log.d("WarLogDao", "Добавлен лог: ${log.playerName} против ${log.opponentName}, атака=${log.isAttack}")
-    }
+    suspend fun insertWarLog(log: WarLogEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWarLogs(logs: List<WarLogEntity>)
@@ -27,18 +25,18 @@ interface WarLogDao {
     fun getWarLogsForPlayer(playerTag: String): LiveData<List<WarLogEntity>>
 
     @Query("""
-    SELECT 
-        playerTag,
-        playerName,
-        playerPosition AS number,
-        COUNT(DISTINCT warEndTime) AS warsParticipated,
-        SUM(CASE WHEN isAttack THEN 1 ELSE 0 END) AS totalAttacks,
-        SUM(CASE WHEN isAttack THEN stars ELSE 0 END) AS totalStars,
-        AVG(CASE WHEN isAttack THEN destructionPercentage ELSE NULL END) AS avgDestruction,
-        SUM(points) AS totalUtility
-    FROM war_logs
-    GROUP BY playerTag
-    ORDER BY totalUtility DESC
-""")
+        SELECT 
+            playerTag,
+            playerName,
+            playerPosition AS number,
+            COUNT(DISTINCT warEndTime) AS warsParticipated,
+            SUM(CASE WHEN isAttack THEN 1 ELSE 0 END) AS totalAttacks,
+            SUM(CASE WHEN isAttack THEN stars ELSE 0 END) AS totalStars,
+            AVG(CASE WHEN isAttack THEN destructionPercentage ELSE NULL END) AS avgDestruction,
+            SUM(points) AS totalUtility
+        FROM war_logs
+        GROUP BY playerTag
+        ORDER BY totalUtility DESC
+    """)
     suspend fun getPlayerStats(): List<PlayerStats>
 }

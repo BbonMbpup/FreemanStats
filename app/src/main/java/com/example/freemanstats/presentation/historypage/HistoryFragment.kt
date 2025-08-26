@@ -97,6 +97,6 @@ class HistoryFragment : Fragment() {
     }
 
     companion object {
-        private val CLAN_TAG = "#2G082QRJL"
+        private val CLAN_TAG = "#2GUUYYCY9"
     }
 }

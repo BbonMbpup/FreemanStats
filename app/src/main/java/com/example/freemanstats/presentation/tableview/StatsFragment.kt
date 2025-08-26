@@ -5,12 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.evrencoskun.tableview.TableView
+import com.example.freemanstats.R
 import com.example.freemanstats.databinding.FragmentStatsBinding
 import com.example.freemanstats.domain.model.PlayerStats
 import com.example.freemanstats.presentation.tableview.listeners.StatsTableViewListener
+import com.example.freemanstats.work.TestWorker
+import com.example.freemanstats.work.WarSyncWorker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,12 +40,27 @@ class StatsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.periodSlider.setLabelFormatter { value ->
+            when (value.toInt()) {
+                0 -> "День"
+                1 -> "Неделя"
+                2 -> "Месяц"
+                else -> ""
+            }
+        }
 
         tableView = binding.myTableView
 
         initTableView()
-
+        setupTestButton()
         observeData()
+    }
+
+    private fun setupTestButton() {
+        binding.btnRefresh.setOnClickListener {
+            viewModel.loadStats()
+
+        }
     }
 
     private fun initTableView() {

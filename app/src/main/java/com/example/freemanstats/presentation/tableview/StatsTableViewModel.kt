@@ -26,7 +26,7 @@ class StatsTableViewModel @Inject constructor(
         Log.d("StatsViewModel", "StatsTableViewModel created")
     }
 
-    private fun loadStats() {
+    fun loadStats() {
         _state.value = StatsTableState(isLoading = true)
 
         viewModelScope.launch {
@@ -53,6 +53,8 @@ class StatsTableViewModel @Inject constructor(
             }
         }
     }
+
+
 
     fun getCellItemViewType(column: Int): Int {
         return tableDataHelper.getCellItemViewType(column)

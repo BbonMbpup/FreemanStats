@@ -50,52 +50,60 @@ class ClanWarRepository @Inject constructor(
     suspend fun saveWarResultToDatabase(war: ClanWar): Boolean {
         Log.d("Repository", "Сохраняем данные войны с endTime: ${war.endTime}")
         return try {
-            val endTime = war.endTime // формат ISO 8601, как приходит с сервера
+            val endTime = war.endTime ?: return false
+            val logs = mutableListOf<WarLogEntity>()
 
-
+            // Логи атак твоей команды
             war.clan.members?.forEach { member ->
-                // атаки игрока
                 member.attacks?.forEach { attack ->
-                    val log = WarLogEntity(
-                        warEndTime = endTime,
-                        playerTag = member.tag,
-                        playerName = member.name,
-                        playerPosition = member.mapPosition,
-                        isAttack = true,
-                        opponentTag = attack.defenderTag,
-                        opponentName = war.opponent.members?.find { it.tag == attack.defenderTag }?.name ?: "Unknown",
-                        opponentPosition = war.opponent.members?.find { it.tag == attack.defenderTag }?.mapPosition ?: 0,
-                        stars = attack.stars,
-                        points = calculateAttackPoints(attack.stars),
-                        destructionPercentage = attack.destructionPercentage.toInt()
+                    val opponent = war.opponent.members?.find { it.tag == attack.defenderTag }
+                    logs.add(
+                        WarLogEntity(
+                            warEndTime = endTime,
+                            playerTag = member.tag,
+                            playerName = member.name,
+                            playerPosition = member.mapPosition,
+                            isAttack = true,
+                            opponentTag = attack.defenderTag,
+                            opponentName = opponent?.name ?: "Unknown",
+                            opponentPosition = opponent?.mapPosition ?: 0,
+                            stars = attack.stars,
+                            points = calculateAttackPoints(attack.stars),
+                            destructionPercentage = attack.destructionPercentage.toInt()
+                        )
                     )
-                    Log.d("ClanWarRepository", "Добавляем лог: ${log.playerName} против ${log.opponentName}, атака=${log.isAttack}")
-                    warLogDao.insertWarLog(log)
-                }
-
-                // атака на игрока
-                member.bestOpponentAttack?.let { defense ->
-                    val log = WarLogEntity(
-                        warEndTime = endTime,
-                        playerTag = member.tag,
-                        playerName = member.name,
-                        playerPosition = member.mapPosition,
-                        isAttack = false,
-                        opponentTag = defense.attackerTag,
-                        opponentName = war.opponent.members?.find { it.tag == defense.attackerTag }?.name ?: "Unknown",
-                        opponentPosition = war.opponent.members?.find { it.tag == defense.attackerTag }?.mapPosition ?: 0,
-                        stars = defense.stars,
-                        points = calculateDefensePoints(defense.stars),
-                        destructionPercentage = defense.destructionPercentage.toInt()
-                    )
-                    Log.d("ClanWarRepository", "Добавляем лог: ${log.playerName} против ${log.opponentName}, атака=${log.isAttack}")
-                    warLogDao.insertWarLog(log)
                 }
             }
 
+            // Логи атак противника
+            war.opponent.members?.forEach { member ->
+                member.attacks?.forEach { attack ->
+                    val opponent = war.clan.members?.find { it.tag == attack.defenderTag }
+                    logs.add(
+                        WarLogEntity(
+                            warEndTime = endTime,
+                            playerTag = member.tag,
+                            playerName = member.name,
+                            playerPosition = member.mapPosition,
+                            isAttack = false,
+                            opponentTag = attack.defenderTag,
+                            opponentName = opponent?.name ?: "Unknown",
+                            opponentPosition = opponent?.mapPosition ?: 0,
+                            stars = attack.stars,
+                            points = calculateDefensePoints(attack.stars),
+                            destructionPercentage = attack.destructionPercentage.toInt()
+                        )
+                    )
+                }
+            }
+
+            // Один раз вставляем все логи в БД
+            warLogDao.insertWarLogs(logs)
+            Log.d("Repository", "Сохранено ${logs.size} логов войны")
+
             true
         } catch (e: Exception) {
-            Log.e("ClanWarRepository", "Ошибка при сохранении результатов: ${e.message}")
+            Log.e("Repository", "Ошибка при сохранении результатов: ${e.message}", e)
             false
         }
     }

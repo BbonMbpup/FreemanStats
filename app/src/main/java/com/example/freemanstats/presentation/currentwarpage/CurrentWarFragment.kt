@@ -27,7 +27,7 @@ class CurrentWarFragment : Fragment() {
 
     private lateinit var binding: FragmentCurrentWarBinding
     private lateinit var adapter: MemberAdapter
-    private val clanTag = "#2G082QRJL"
+    private val clanTag = "#2GLCJUQC2"
 
     private val viewModel: CurrentWarViewModel by viewModels()
 

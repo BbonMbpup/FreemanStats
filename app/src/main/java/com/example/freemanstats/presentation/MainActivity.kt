@@ -14,6 +14,7 @@ import androidx.work.WorkManager
 import com.example.freemanstats.R
 import com.example.freemanstats.animation.ZoomOutPageTransformer
 import com.example.freemanstats.databinding.ActivityMainBinding
+import com.example.freemanstats.utils.CoCTagGenerator
 import com.example.freemanstats.work.TestWorker
 import com.example.freemanstats.work.WarSyncWorker
 import com.google.android.material.tabs.TabLayoutMediator
@@ -34,11 +35,13 @@ class MainActivity : AppCompatActivity() {
         setupTestButton()
     }
 
+
+
     private fun setupTestButton() {
         findViewById<Button>(R.id.buttonTestWorker).setOnClickListener {
             Log.d("WarSyncWorker", "Запускаем ручной WarSyncWorker")
             val request = OneTimeWorkRequestBuilder<WarSyncWorker>()
-//                .addTag("ManualWarTest")
+                .addTag("ManualWarTest")
                 .build()
             WorkManager.getInstance(this).enqueue(request)
             val testRequest = OneTimeWorkRequestBuilder<TestWorker>()

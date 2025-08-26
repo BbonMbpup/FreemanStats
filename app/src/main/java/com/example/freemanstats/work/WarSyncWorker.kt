@@ -30,7 +30,7 @@ class WarSyncWorker @AssistedInject constructor(
         Log.d("WarSyncWorker", "Запущен doWork()")
         val isManualTest = tags.contains("ManualWarTest")
 
-        val clanTag = "#2G082QRJL"
+        val clanTag = "#2GLCJUQC2"
         val war = repository.getCurrentWar(clanTag)
 
         // Если войны нет
@@ -60,8 +60,10 @@ class WarSyncWorker @AssistedInject constructor(
                 "Текущая война",
                 "Завершается в $formattedTime"
             )
+            repository.saveWarResultToDatabase(war)
+            Log.d("WarSyncWorker", "Данные о войне успешно сохранены в бд")
         } else {
-            if (war.state == "war" || war.state == "preparation") {
+            if (war.state == "inWar" || war.state == "preparation") {
                 Log.d("WarSyncWorker", "Идет война или подготовка")
 
                 Log.d("WarSyncWorker", "now: $now")
@@ -69,20 +71,26 @@ class WarSyncWorker @AssistedInject constructor(
                 Log.d("WarSyncWorker", "nowStr: ${SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(now))}")
                 Log.d("WarSyncWorker", "endTimeStr: ${SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(endTime))}")
 
+
                 val isEnded = now >= endTime
+
                 if (isEnded) {
                     Log.d("WarSyncWorker", "Война завершилась, сохраняем...")
-                    repository.saveWarResultToDatabase(war)
 
-                    NotificationUtils.createNotificationChannel(applicationContext)
-                    NotificationUtils.showNotification(
-                        applicationContext,
-                        "Война завершена!",
-                        "Данные о войне успешно сохранены."
-                    )
+                } else {
+                    Log.d("WarSyncWorker", "НЕ УДАЛОСЬ СОХРАНИТЬ ДАННЫЕ В БД")
                 }
             } else {
                 Log.d("WarSyncWorker", "Война в состоянии ${war.state}")
+                repository.saveWarResultToDatabase(war)
+
+                NotificationUtils.createNotificationChannel(applicationContext)
+                NotificationUtils.showNotification(
+                    applicationContext,
+                    "Война завершена!",
+                    "Данные о войне успешно сохранены."
+                )
+
                 NotificationUtils.createNotificationChannel(applicationContext)
                 NotificationUtils.showNotification(
                     applicationContext,
