@@ -17,6 +17,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val cocApiKey = providers.gradleProperty("COC_API_KEY").orElse("").get()
+        buildConfigField("String", "COC_API_KEY", "\"$cocApiKey\"")
     }
 
     buildTypes {
@@ -107,6 +110,9 @@ dependencies {
     // Для AndroidX Notifications
     implementation ("androidx.core:core-ktx:1.13.1")
     implementation ("androidx.core:core:1.13.1")
+
+    // preferences
+    implementation("androidx.preference:preference-ktx:1.2.0")
 
     // Тестирование
     testImplementation("junit:junit:4.13.2")

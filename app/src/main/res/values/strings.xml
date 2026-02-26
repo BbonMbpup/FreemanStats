@@ -8,4 +8,5 @@
     <string name="sort_descending">Сортировать ↓</string>
     <string name="row_hide">Скрыть строку</string>
     <string name="row_show">Показать строку</string>
+    <string name="app_logo">Логотип приложения</string>
 </resources>

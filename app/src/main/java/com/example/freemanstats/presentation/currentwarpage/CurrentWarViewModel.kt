@@ -30,12 +30,12 @@ class CurrentWarViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
-    fun loadCurrentWar(clanTag: String) {
+    fun loadCurrentWar() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = null
             try {
-                val clanWar = repository.getCurrentWar(clanTag)
+                val clanWar = repository.getCurrentWar()
                 if (clanWar != null) {
 
                     if (clanWar.state == "notInWar") {

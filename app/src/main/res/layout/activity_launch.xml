@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cardview_dark_background"
+    android:padding="24dp"
+    tools:context=".presentation.startpage.LaunchActivity">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        app:layout_constraintBottom_toTopOf="@+id/titleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo_app"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="64dp"
+        android:contentDescription="@string/app_logo" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Clan Wars Tracker"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/subtitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Введите тег вашего клана"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/clanTagInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:hint="Тег клана (например: #2GLCJUQC2)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/clanTagEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:maxLines="2"
+        app:layout_constraintTop_toBottomOf="@+id/clanTagInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/clanTagInputLayout"
+        app:layout_constraintEnd_toEndOf="@+id/clanTagInputLayout"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="@+id/clanTagInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/clanTagInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/errorTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/purple"
+        android:text="Сохранить и продолжить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/helpTextView"
+        app:layout_constraintEnd_toEndOf="@+id/clanTagInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/clanTagInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:lineSpacingExtra="4sp"
+        android:text="Как найти тег клана? Откройте игру Clash of Clans, перейдите в профиль клана и скопируйте тег (начинается с #)"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

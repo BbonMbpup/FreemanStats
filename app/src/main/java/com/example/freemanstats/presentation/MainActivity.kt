@@ -1,5 +1,6 @@
 package com.example.freemanstats.presentation
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,21 +14,36 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.freemanstats.R
 import com.example.freemanstats.animation.ZoomOutPageTransformer
+import com.example.freemanstats.data.ClanPreferences
 import com.example.freemanstats.databinding.ActivityMainBinding
+import com.example.freemanstats.presentation.startpage.LaunchActivity
 import com.example.freemanstats.utils.CoCTagGenerator
 import com.example.freemanstats.work.TestWorker
 import com.example.freemanstats.work.WarSyncWorker
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.migration.CustomInjection.inject
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    @Inject
+    lateinit var clanPreferences: ClanPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (clanPreferences.getClanTag() == null) {
+            // Если тега нет, переходим к LaunchActivity
+            startActivity(Intent(this, LaunchActivity::class.java))
+            finish()
+            return
+        }
+
+
         askNotificationPermission()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -66,12 +82,14 @@ class MainActivity : AppCompatActivity() {
                 0 -> "Текущая война"
                 1 -> "Статистика"
                 2 -> "История"
+                3 -> "Настройки"
                 else -> null
             }
             tab.icon = when (position) {
                 0 -> ContextCompat.getDrawable(this, R.drawable.swords_tab)
                 1 -> ContextCompat.getDrawable(this, R.drawable.table_tab)
                 2 -> ContextCompat.getDrawable(this, R.drawable.history_tab)
+                3 -> ContextCompat.getDrawable(this, R.drawable.setting)
                 else -> null
             }
         }.attach()

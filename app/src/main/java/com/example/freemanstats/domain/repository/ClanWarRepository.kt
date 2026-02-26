@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.freemanstats.api.ClashOfClansApi
 import com.example.freemanstats.data.AppDatabase
+import com.example.freemanstats.data.ClanPreferences
 import com.example.freemanstats.data.SecurePrefs
 import com.example.freemanstats.data.WarLogDao
 import com.example.freemanstats.domain.model.ClanWar
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class ClanWarRepository @Inject constructor(
     private val api: ClashOfClansApi,
     private val warLogDao: WarLogDao,
+    private val clanPreferences: ClanPreferences,
     @ApplicationContext private val context: Context
 ) {
 
@@ -34,6 +36,15 @@ class ClanWarRepository @Inject constructor(
             Log.e("Repository", "Network error: ${e.message}")
             null
         }
+    }
+
+    suspend fun getCurrentWar(): ClanWar? {
+        val clanTag = clanPreferences.getClanTag()
+        if (clanTag == null) {
+            Log.e("Repository", "Clan tag is null in preferences")
+            return null
+        }
+        return getCurrentWar(clanTag)
     }
 
 
