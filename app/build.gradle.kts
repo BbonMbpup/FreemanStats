@@ -17,6 +17,19 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val cocApiKeyFromGradle = providers.gradleProperty("COC_API_KEY").orElse("").get()
+        val cocApiKeyFromLocal = providers.fileContents(rootProject.layout.projectDirectory.file("local.properties"))
+            .asText
+            .map { text ->
+                java.util.Properties().apply { load(text.reader()) }
+                    .getProperty("COC_API_KEY", "")
+            }
+            .orElse("")
+            .get()
+        val cocApiKey = cocApiKeyFromGradle.ifBlank { cocApiKeyFromLocal }
+
+        buildConfigField("String", "COC_API_KEY", "\"$cocApiKey\"")
     }
 
     buildTypes {

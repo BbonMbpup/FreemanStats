@@ -23,8 +23,12 @@ class App : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        SecurePrefs.saveApiKey(this, "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjRkMTM3ZGNjLTRhZjUtNDJmMy05MzEyLTgxYzUxYjU4OTkyNCIsImlhdCI6MTc1MjQ4MDg3Miwic3ViIjoiZGV2ZWxvcGVyLzBmOTZhY2JlLWQzNTYtNDI1OS1kY2E0LWU2MTY1YWJhOGZhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMzUuMzMuMTgxIl0sInR5cGUiOiJjbGllbnQifV19.YGoHEvDRwUgbG8oRhf68pXd-K6q_jeTRm6GrnH4i0mlUXq2NzHeky9nNFWSITruUG-p989_cQRXKmejmM-28kA")
-        Log.d("App", "API key saved: ${SecurePrefs.getApiKey(this) != null}")
+        if (BuildConfig.COC_API_KEY.isNotBlank()) {
+            SecurePrefs.saveApiKey(this, "Bearer ${BuildConfig.COC_API_KEY}")
+            Log.d("App", "API key saved from BuildConfig")
+        } else {
+            Log.w("App", "COC_API_KEY is empty. Network calls to Clash of Clans API will fail until it is configured")
+        }
 
         WarSyncScheduler.schedule(this)
 
